@@ -1,0 +1,6 @@
+@Itisovtsy.API_HostAddress = http://localhost:5209
+
+GET {{Itisovtsy.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
