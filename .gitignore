@@ -106,3 +106,9 @@ Thumbs.db
 
 
 .vscode/
+
+# .NET build output
+bin/
+obj/
+
+Migrations/
