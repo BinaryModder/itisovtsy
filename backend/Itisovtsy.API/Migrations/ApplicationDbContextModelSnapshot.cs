@@ -90,6 +90,50 @@ namespace Itisovtsy.API.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Itisovtsy.API.Models.Question", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
+
+                    b.Property<int>("Course")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(140)
+                        .HasColumnType("character varying(140)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("CreatedAt", "Id");
+
+                    b.ToTable("Questions", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Questions_Course", "\"Course\" BETWEEN 1 AND 4");
+                        });
+                });
+
             modelBuilder.Entity("Itisovtsy.API.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -160,6 +204,17 @@ namespace Itisovtsy.API.Migrations
                         .IsRequired();
 
                     b.Navigation("UploadedBy");
+                });
+
+            modelBuilder.Entity("Itisovtsy.API.Models.Question", b =>
+                {
+                    b.HasOne("Itisovtsy.API.Models.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("Itisovtsy.API.Models.User", b =>

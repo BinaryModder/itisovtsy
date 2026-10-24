@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Text.RegularExpressions;
-using Itisovtsy.API.Contracts.Auth;
+using Itisovtsy.API.Dtos.Auth;
 using Itisovtsy.API.Data;
 using Itisovtsy.API.Models;
 using Microsoft.AspNetCore.Authorization;

@@ -10,6 +10,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<Question> Questions => Set<Question>();
     public DbSet<LibraryMaterial> LibraryMaterials => Set<LibraryMaterial>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

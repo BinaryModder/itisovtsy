@@ -67,7 +67,7 @@ onDeactivated(() => composer.value?.close())
 
 <template>
   <main class="questions-page" aria-labelledby="questions-title">
-    <div class="profile-breadcrumb"><a href="#">Главная</a><span aria-hidden="true">/</span><button v-if="selected" type="button" class="breadcrumb-button" @click="backToQuestions">Вопросы</button><span v-else>Вопросы</span><span v-if="selected">/ Обсуждение</span><span class="profile-demo">DEMO</span></div>
+    <div class="profile-breadcrumb"><RouterLink to="/">Главная</RouterLink><span aria-hidden="true">/</span><button v-if="selected" type="button" class="breadcrumb-button" @click="backToQuestions">Вопросы</button><span v-else>Вопросы</span><span v-if="selected">/ Обсуждение</span><span class="profile-demo">DEMO</span></div>
     <template v-if="!selected">
       <div class="profile-heading questions-heading"><div><p class="eyebrow">&gt;_ РАЗБЕРЁМСЯ ВМЕСТЕ</p><h1 id="questions-title" ref="pageTitle" tabindex="-1">Вопросы<span>.</span></h1><p class="library-subtitle">Спроси своих. Помоги другим. Найди решение.</p></div><button class="button button-primary" type="button" @click="openComposer">Задать вопрос <span aria-hidden="true">+</span></button></div>
       <div class="questions-layout"><div class="questions-main">

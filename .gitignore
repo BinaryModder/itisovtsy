@@ -110,5 +110,3 @@ Thumbs.db
 # .NET build output
 bin/
 obj/
-
-Migrations/

@@ -1,4 +1,4 @@
-namespace Itisovtsy.API.Contracts.Auth;
+namespace Itisovtsy.API.Dtos.Auth;
 
 public sealed record RegisterResponse(
     Guid Id,

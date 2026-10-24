@@ -37,7 +37,7 @@ function saveProfile() {
 
 <template>
   <main class="student-page" aria-labelledby="student-title">
-    <div class="profile-breadcrumb"><a href="#">Главная</a><span aria-hidden="true">/</span><span>Мой профиль</span><span v-if="!account" class="profile-demo">DEMO</span></div>
+    <div class="profile-breadcrumb"><RouterLink to="/">Главная</RouterLink><span aria-hidden="true">/</span><span>Мой профиль</span><span v-if="!account" class="profile-demo">DEMO</span></div>
     <div class="profile-heading"><div><p class="eyebrow">&gt;_ ЛИЧНОЕ ПРОСТРАНСТВО</p><h1 id="student-title">Твой профиль<span>.</span></h1></div><button v-if="!account" class="button button-outline" type="button" @click="editProfile">Редактировать <span aria-hidden="true">↗</span></button></div>
     <p v-if="saved" class="profile-saved" role="status">Изменения применены в демо. После перезагрузки они сбросятся.</p>
     <div class="student-layout">

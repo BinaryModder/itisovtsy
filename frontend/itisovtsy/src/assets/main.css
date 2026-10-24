@@ -186,6 +186,11 @@ footer { display: flex; align-items: center; justify-content: space-between; gap
 .library-banner p { margin: 0; font-size: 13px; line-height: 1.9; color: #b4c4dd; }
 .library-banner strong { font-weight: 400; color: white; }
 .library-banner-note { margin-left: auto; font-size: 10px; color: #a6b8d6; }
+.library-sections { flex-wrap: wrap; gap: 8px 24px; }
+.library-sections button { font-size: 12px; text-align: left; }
+.library-section-heading { margin: 24px 0 20px; }
+.library-section-heading h2 { margin: 0 0 8px; font-size: 20px; color: var(--accent); }
+.library-section-heading p { margin: 0; font-size: 12px; line-height: 1.7; color: #65738b; }
 .library-filters { display: grid; gap: 18px; padding: 24px; background: #f7f9fc; border: 1px solid #e3e8f0; border-radius: 10px; }
 .library-filters label { display: block; font-size: 10px; color: #65738b; margin-bottom: 9px; }
 .library-search input, .library-selects select, .form-field select { width: 100%; min-width: 0; font: inherit; font-size: 12px; border: 1px solid #dbe2ee; border-radius: 6px; padding: 13px; color: var(--accent); background: white; }

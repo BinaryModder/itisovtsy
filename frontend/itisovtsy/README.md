@@ -2,6 +2,13 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+## Routing
+
+Vue Router uses Web History: `/`, `/library`, `/questions`, `/profile`.
+Routes are defined in `src/router/index.ts`; `/profile` waits for session restoration and requires an authenticated account.
+`src/composables/useAuth.ts` shares account state and a single `/api/auth/me` request between the app and router.
+Nginx serves `index.html` for direct page requests through `try_files $uri $uri/ /index.html`.
+
 ## Recommended IDE Setup
 
 [VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).

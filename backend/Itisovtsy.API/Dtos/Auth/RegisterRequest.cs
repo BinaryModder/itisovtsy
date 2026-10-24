@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Itisovtsy.API.Contracts.Auth;
+namespace Itisovtsy.API.Dtos.Auth;
 
 public sealed class RegisterRequest
 {
