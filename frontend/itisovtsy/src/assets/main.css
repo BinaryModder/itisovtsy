@@ -249,3 +249,5 @@ button:disabled { cursor: wait; opacity: .6; }
   .preview-footer { flex-wrap: wrap; padding: 16px; }
   .preview-footer p { width: 100%; margin: 0; }
 }
+
+button:disabled { opacity: .6; cursor: wait; }

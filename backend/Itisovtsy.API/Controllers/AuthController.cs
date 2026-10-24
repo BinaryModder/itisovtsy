@@ -1,3 +1,7 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Text.RegularExpressions;
 using Itisovtsy.API.Contracts.Auth;
 using Itisovtsy.API.Data;
@@ -86,6 +90,75 @@ public class AuthController : ControllerBase
             user.Level,
             user.ExperiencePoints,
             user.CreatedAt));
+    }
+
+    [AllowAnonymous]
+    [EnableRateLimiting("login")]
+    [HttpPost("login")]
+    [Consumes("application/json")]
+    [EndpointSummary("Вход в аккаунт")]
+    [ProducesResponseType(typeof(RegisterResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
+    public async Task<ActionResult<RegisterResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
+    {
+        var email = request.Email.Trim().ToLowerInvariant();
+        var user = await _dbContext.Users.SingleOrDefaultAsync(u => u.Email.ToLower() == email, cancellationToken);
+        // Verify a real hash even for an unknown email to reduce timing differences.
+        var candidate = user ?? DummyUser;
+        var result = _passwordHasher.VerifyHashedPassword(candidate, candidate.PasswordHash, request.Password);
+        if (user is null || result == PasswordVerificationResult.Failed)
+            return Problem(statusCode: 401, title: "Неверная почта или пароль.");
+
+        if (result == PasswordVerificationResult.SuccessRehashNeeded)
+        {
+            user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        var identity = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.Name)
+        }, CookieAuthenticationDefaults.AuthenticationScheme);
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(identity), new AuthenticationProperties { IsPersistent = true });
+        return ToResponse(user);
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    [EndpointSummary("Текущий пользователь")]
+    public async Task<ActionResult<RegisterResponse>> Me(CancellationToken cancellationToken)
+    {
+        if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id))
+            return Unauthorized();
+        var user = await _dbContext.Users.AsNoTracking().SingleOrDefaultAsync(u => u.Id == id, cancellationToken);
+        if (user is null)
+        {
+            await HttpContext.SignOutAsync();
+            return Unauthorized();
+        }
+        return ToResponse(user);
+    }
+
+    [HttpPost("logout")]
+    [Consumes("application/json")]
+    [EndpointSummary("Выход из аккаунта")]
+    public async Task<IActionResult> Logout([FromBody] System.Text.Json.JsonElement request)
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return NoContent();
+    }
+
+    private static RegisterResponse ToResponse(User user) =>
+        new(user.Id, user.Name, user.Email, user.Level, user.ExperiencePoints, user.CreatedAt);
+
+    private static readonly Itisovtsy.API.Models.User DummyUser = CreateDummyUser();
+    private static Itisovtsy.API.Models.User CreateDummyUser()
+    {
+        var user = new Itisovtsy.API.Models.User { Name = "", Email = "", PasswordHash = "" };
+        user.PasswordHash = new PasswordHasher<Itisovtsy.API.Models.User>().HashPassword(user, Guid.NewGuid().ToString());
+        return user;
     }
 
     private ObjectResult EmailAlreadyRegistered()

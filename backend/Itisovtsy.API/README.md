@@ -103,3 +103,23 @@ dotnet ef migrations add MigrationName
 dotnet ef migrations has-pending-model-changes
 dotnet ef migrations script
 ```
+
+## Вход и сессия
+
+Swagger UI: http://localhost:5209/swagger (Development).
+
+- `POST /auth/login`: JSON `{ "email": "student@example.com", "password": "your-password" }`.
+- `GET /auth/me`: текущий пользователь, либо `401`, если сессии нет.
+- `POST /auth/logout`: JSON `{}`, удаляет cookie, возвращает `204`.
+
+Все POST-запросы `/auth/*` требуют `Content-Type: application/json`. В Swagger
+для выхода передай `{}`. Вход возвращает профиль и устанавливает HttpOnly-cookie
+на 7 дней с продлением при активности; пароль и cookie не хранятся в localStorage.
+В Production cookie передаётся только по HTTPS. Docker сохраняет ключи защиты
+cookie в томе `api-keys`. Не включайте CORS с credentials для недоверенных сайтов.
+После 10 попыток входа за минуту с одного IP сервер возвращает `429`. За Nginx
+лимит применяется к адресу прокси; для индивидуальных лимитов в production
+нужно настроить доверенные прокси и обработку forwarded headers.
+
+Фронтенд использует `/api/auth/*`: Nginx и dev-сервер Vite направляют их в API.
+Регистрация создаёт аккаунт; затем пользователь входит с почтой и паролем.
