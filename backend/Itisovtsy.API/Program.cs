@@ -13,9 +13,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+
+
+builder.Services.AddOpenApi();
 var app = builder.Build();
 
 if (app.Configuration.GetValue<bool>("Database:MigrateOnStartup"))
@@ -29,6 +34,8 @@ if (app.Configuration.GetValue<bool>("Database:MigrateOnStartup"))
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
@@ -46,5 +53,4 @@ app.MapGet("/health", async (ApplicationDbContext dbContext, CancellationToken c
 });
 
 app.MapControllers();
-
 app.Run();

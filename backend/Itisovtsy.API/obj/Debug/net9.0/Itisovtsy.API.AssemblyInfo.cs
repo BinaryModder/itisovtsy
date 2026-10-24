@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Itisovtsy.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d2a375fcc4f494fa2d8fb73993c04dd52c3bd90")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96be678994db9f51fe511675c8294c2ace9660bf")]
 [assembly: System.Reflection.AssemblyProductAttribute("Itisovtsy.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Itisovtsy.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
