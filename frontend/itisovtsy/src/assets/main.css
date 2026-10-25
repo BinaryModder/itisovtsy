@@ -256,3 +256,7 @@ button:disabled { cursor: wait; opacity: .6; }
 }
 
 button:disabled { opacity: .6; cursor: wait; }
+
+/* Keep the expanded section navigation readable on narrow screens. */
+.site-header { flex-wrap: wrap; padding-block: 22px; }
+.header-nav { flex-wrap: wrap; gap: 14px 24px; }

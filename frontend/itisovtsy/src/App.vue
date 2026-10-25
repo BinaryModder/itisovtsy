@@ -61,6 +61,7 @@ function openAuth(mode: 'login' | 'register') {
         <span class="brand-mark" aria-hidden="true">[INSTITUTE OF TECHNOLOGY AND INTELLIGENCE SYSTEMS]</span>
       </RouterLink>
       <nav class="header-nav" aria-label="Основная навигация">
+      <RouterLink class="header-profile" to="/practice">Практикум</RouterLink>
       <RouterLink class="header-profile" to="/questions">Вопросы</RouterLink>
       <RouterLink class="header-profile" to="/library">Библиотека</RouterLink>
       <RouterLink v-if="account" class="header-profile" to="/profile">Мой профиль <span aria-hidden="true">↗</span></RouterLink>
@@ -70,7 +71,7 @@ function openAuth(mode: 'login' | 'register') {
 
     <p v-if="sessionError" class="field-error" role="alert">{{ sessionError }}</p>
     <RouterView v-slot="{ Component }">
-      <KeepAlive include="LibraryPage,QuestionsPage">
+      <KeepAlive include="LibraryPage,QuestionsPage,PracticeView">
         <component :is="Component" v-bind="pageProps" @open-auth="openAuth" />
       </KeepAlive>
     </RouterView>

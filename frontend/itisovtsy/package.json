@@ -8,7 +8,9 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build"
+    "type-check": "vue-tsc --build",
+    "test": "bun test",
+    "test:render": "bun tests/render-practice.mjs"
   },
   "dependencies": {
     "vue": "^3.5.42",

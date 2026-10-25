@@ -20,6 +20,7 @@ const emit = defineEmits<{ openAuth: [mode: 'login' | 'register'] }>()
         <RouterLink v-else class="button button-primary" to="/profile">В мой профиль <span aria-hidden="true">↗</span></RouterLink>
         <RouterLink class="button button-outline" to="/library">Библиотека</RouterLink>
         <RouterLink class="button button-outline" to="/questions">Вопросы</RouterLink>
+        <RouterLink class="button button-outline" to="/practice">Практикум ↗</RouterLink>
       </div>
     </div>
     <div class="sphere-scene"><CommunitySphere /></div>

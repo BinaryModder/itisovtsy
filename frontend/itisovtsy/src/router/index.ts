@@ -6,6 +6,7 @@ const router = createRouter({
   routes: [
     { path: '/', name: 'home', component: () => import('../views/HomeView.vue') },
     { path: '/library', name: 'library', component: () => import('../components/LibraryPage.vue') },
+    { path: '/practice', name: 'practice', component: () => import('../views/PracticeView.vue') },
     { path: '/questions', name: 'questions', component: () => import('../components/QuestionsPage.vue') },
     { path: '/profile', name: 'profile', component: () => import('../components/StudentProfile.vue'), meta: { requiresAuth: true } },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('../views/NotFoundView.vue') },
